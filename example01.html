@@ -5,6 +5,154 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
+        <link rel="stylesheet" href="/css/reset.css" />
+        <style>
+            .stage {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100vw;
+                height: 100vh;
+                background: #333;
+            }
+            .door {
+                position: relative;
+                width: 100px;
+                height: 150px;
+            }
+            .door-back {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background: black;
+                overflow: hidden;
+            }
+            .ilbuni {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100px;
+                height: 100px;
+                background-repeat: no-repeat;
+                background-position: 50% 100%;
+                background-size: contain;
+                transform: translate3d(100%, 0, 0);
+                transition: 0.5s 0.3s;
+            }
+            .door:nth-child(1) .ilbuni {
+                background-image: url(images/ilbuni_0.png);
+            }
+            .door:nth-child(2) .ilbuni {
+                background-image: url(images/ilbuni_1.png);
+            }
+            .door:nth-child(3) .ilbuni {
+                background-image: url(images/ilbuni_2.png);
+            }
+            .door-body {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                transition: 0.5s;
+                transform-origin: 0%;
+                cursor: pointer;
+            }
+            .door:nth-child(1) .door-body {
+                background: rgba(255, 0, 0, 0.7);
+            }
+            .door:nth-child(2) .door-body {
+                background: rgba(0, 255, 0, 0.7);
+            }
+            .door:nth-child(3) .door-body {
+                background: rgba(0, 0, 255, 0.7);
+            }
+            /* .door:hover .door-body {
+                transform: perspective(800px) rotateY(-110deg);
+            }
+            .door:hover .ilbuni {
+                transform: translate3d(0, 0, 0);
+            } */
+            .door-opened .door-body {
+                transform: perspective(800px) rotateY(-110deg);
+            }
+            .door-opened .ilbuni {
+                transform: translate3d(0, 0, 0);
+            }
+        </style>
     </head>
-    <body></body>
+    <body>
+        <div class="stage">
+            <div class="door">
+                <div class="door-back">
+                    <div class="ilbuni"></div>
+                </div>
+                <div class="door-body"></div>
+            </div>
+            <div class="door">
+                <div class="door-back">
+                    <div class="ilbuni"></div>
+                </div>
+                <div class="door-body"></div>
+            </div>
+            <div class="door">
+                <div class="door-back">
+                    <div class="ilbuni"></div>
+                </div>
+                <div class="door-body"></div>
+            </div>
+        </div>
+        <script>
+            //기존
+            // {
+            //     const stageElem = document.querySelector(".stage");
+            //     //해당 블럭 안에서 전역 변수 선언 후 변수에 필요한 객체를 저장 후 변수의 주소 값으로 바로 접근.(객체를 찾기 위한 연산을 줄이기 위함.)
+            //     let openedItem;
+
+            //     stageElem.addEventListener("click", function (e) {
+            //         const targetElem = e.target;
+
+            //         // DOM에 접근하는 방식은 제일 느린방식이다. 연산 처리를 더 많이 함.
+            //         if (targetElem.classList.contains("door-body")) {
+            //             if (openedItem) {
+            //                 openedItem.classList.remove("door-opened");
+            //             }
+
+            //             targetElem.parentNode.classList.add("door-opened");
+            //             openedItem = targetElem.parentNode;
+            //         }
+            //     });
+            // }
+
+            //리펙토링
+            {
+                const stageElem = document.querySelector(".stage");
+                const OPENED = "door-opened";
+                let openedItem;
+
+                function activate(door) {
+                    door.classList.add(OPENED);
+                    openedItem = door;
+                }
+
+                function inactivate(elem) {
+                    elem.classList.remove(OPENED);
+                }
+
+                function doorHandler(e) {
+                    const door_body_Elem = e.target;
+
+                    if (openedItem) inactivate(openedItem);
+
+                    if (door_body_Elem.classList.contains("door-body"))
+                        activate(door_body_Elem.parentNode);
+                }
+                stageElem.addEventListener("click", doorHandler);
+
+                activate(stageElem.firstElementChild);
+            }
+        </script>
+    </body>
 </html>
