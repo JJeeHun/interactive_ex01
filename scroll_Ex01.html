@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <style>
+        img {
+            max-width: 100%;
+        }
+        .content {
+            height: 1000vh;
+            padding: 20%;
+            background: yellowgreen;
+        }
+        .output {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            font-size: 2rem;
+            font-weight: 200;
+            color: #fff;
+            background: rgba(0 ,0 ,0 ,0.4);
+        }
+        .ilbuni {
+            width: 100px;
+            margin: 20px auto;
+            transition: 1s;
+        }
+        .ilbuni.zoom {
+            transform: scale(2);
+        }
+    </style>
+</head>
+<body>
+    <div class="output">output</div>
+    <div class="content">
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum numquam ut quisquam. Facilis illum corrupti eum tempore inventore, eaque libero minus nisi deserunt quibusdam molestias nihil ex officia laborum sint!</p>
+        <figure class="ilbuni"><img src="/images/ilbuni_0.png" alt="일분이"></figure>
+    </div>
+    
+    <script>
+        {
+            const outputElem = document.querySelector('.output');
+            const ilbuniElem = document.querySelector('.ilbuni');
+
+            function showValue(params) {
+                // outputElem.innerHTML = window.pageYOffset;
+                // outputElem.innerHTML = ilbuniElem.offsetTop;
+                let posY = ilbuniElem.getBoundingClientRect().top;
+                //outputElem.innerHTML = posY;
+                outputElem.innerHTML = window.innerHeight * 0.2;
+                if(posY < 0) {
+                    ilbuniElem.classList.add('zoom');
+                }else {
+                    ilbuniElem.classList.remove('zoom');
+                }
+            }
+            window.addEventListener('scroll',showValue);
+        }
+    </script>
+</body>
+</html>

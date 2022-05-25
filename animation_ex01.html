@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>animation</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <style>
+        @keyframes ball-ani {
+            from {
+                transform: translate(0 ,0);
+            }
+            to {
+                transform: translate(200px, 200px);
+            }
+        }
+        
+        .ball {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: red;
+            /* animation: ball-ani 1s 3 alternate forwards; */
+        }
+
+        .ball.end {
+            border: 5px solid dodgerblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="ball"></div>
+
+    <script>
+        {
+            const ballElem = document.querySelector('.ball');
+            // click 시 animation 추가
+            ballElem.addEventListener('click',function() {
+                this.style.animation = 'ball-ani 1s 3 alternate forwards';
+            });
+
+            //animation 종료 이벤트
+            // ballElem.addEventListener('animationend',function() {
+            //     this.classList.add('end');
+            // });
+
+            //animation 시작 이벤트
+            ballElem.addEventListener('animationstart',function() {
+                this.classList.add('end');
+            });
+
+            // animation 반복 이벤트 ( 반복이 일어날때 일어나는 이벤트 )
+            ballElem.addEventListener('animationiteration',function() {
+                const arr = ['black','yellow','blue','pink'];
+                const index = Math.floor(Math.random() * 4);
+                this.style.border = '5px solid '+arr[index];
+            });
+        }
+    </script>
+</body>
+</html>
