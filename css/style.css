@@ -1,0 +1,129 @@
+body {
+    /* scroll 생성을 위해 body의 길이를 길게줌. */
+    height: 500vh;
+    font-family: 'Apple SD Gothic Neo', 'Roboto', 'Noto Sans KR', NanumGothic, 'Malgun Gothic',sans-serif;
+    -webkit-overflow-scrolling: touch;
+    color:#555;
+    background: #fff000;
+}
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+.world {
+    /* 스크롤이 올라가도 고정된 화면으로 보여야하기 때문에 fixed 속성 추가 */
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    /* 3D 공간으로 만들어주는 속성 */
+    perspective: 1000px; 
+}
+
+.stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+     /*ie에서는 미적용, 3D 효과가 적용되야하는 부모 ex) stage > * 의 3D 효과를 적용한다. */
+    transform-style: preserve-3d;
+}
+
+/* 안녕하세요,hello 등의 벽 */
+.house {
+    /* 기본적으로 꽉찬 화면에서 축소를 시킨다. */
+    width: 100vw;
+    height: 100vh;
+    
+    /*ie에서는 미적용, 3D 효과가 적용되야하는 부모 ex) stage > * 의 3D 효과를 적용한다. */
+    transform-style: preserve-3d;
+
+    /* zoom out 효과, 꽉찬 효과를 3D의 효과의 Z축을 밀어내는 효과 -> ex) 오른쪽 긴 축이 left의 사이즈 */
+    transform: translateZ(-490vw);
+}
+
+/* wall을 꽉 채우고 포개기 위해 absolute를 사용 */
+.wall {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255,255,255,0.8);
+}
+
+/* 글자를 감싸고 있는 div 글자를 중앙 배치하기 위함 */
+.wall-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* 글자의 font size 변경 */
+.wall-title {
+    font-size: 5rem;
+}
+
+
+
+/* left 벽과 right 벽의 길이는 같기때문에 공통으로 처리함. */
+.wall-left,.wall-right {
+    width: 1000vw;
+    background: #f8f8f8;
+}
+
+/* 왼쪽벽의 길이를 설정(긴벽 효과를 위해) */
+.wall-left {
+    /* view port 단위로 사용 중이기 때문에 vw만큼이동 */
+    /* left: -500vw; */
+
+    /* width: 1000vw; -> size는 공통이기 때문에 공통으로 처리 */
+
+    /* 90도 회전을 위해 rotateY 사용 (y축으로 회전시켜야하기때문)
+     * 해당 사이즈의 가운데 축으로 회전하기 때문에 위치를 변경해줘야함.
+    */
+    transform: rotateY(90deg) translateZ(-500vw);/*left로 이동하지 않고 translate로 이동*/
+}
+
+/* 오른쪽의 길이를 설정(긴벽 효과를 위해) */
+.wall-right {
+    /* view port 단위로 사용 중이기 때문에 vw만큼이동 */
+    /* left: -500vw; */
+
+    /* width: 1000vw; -> size는 공통이기 때문에 공통으로 처리 */
+
+    /* 90도 회전을 위해 rotateY 사용 (y축으로 회전시켜야하기때문)
+     * 해당 사이즈의 가운데 축으로 회전하기 때문에 위치를 변경해줘야함.
+     * 현재 wall-left와 같이 포개져 있기 때문에 house의 width 만큼 오른쪽으로 이동하기 위해
+     * z축사용?
+    */
+    transform: rotateY(90deg) translateZ(-400vw);/*left로 이동하지 않고 translate로 이동, left 사용시 숫자값 100*/
+}
+
+/* 각각의 벽의 Z축으로 뒤쪽으로 나란히 배치 */
+.wall-front-a { transform: translateZ(300vw);}
+.wall-front-b { transform: translateZ(50vw);}
+.wall-front-c { transform: translateZ(-200vw);}
+.wall-front-d { transform: translateZ(-500vw);}
+
+/* 프로그래스를 구현할 div의 default 설정 */
+.progress-bar-con {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 5px;
+    background: #555;
+    /* z-index로 3D 효과를 무시하면서 index값을 올려줌 */
+    z-index: 100;
+}
+
+/* 프로그래스의 표현할 차오를 색 설정 */
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background: #00a8ff;
+}
